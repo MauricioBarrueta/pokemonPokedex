@@ -58,8 +58,9 @@ body { background-color: #3c5aa6 }
     border-radius: 10px; margin-bottom: 10px;    
 }
 .pokedex-pokemon-card {
-    /* height: 175px; position: absolute; left: 303px; top: 315px; */
-    height: 175px; position: fixed; right: 741px; bottom: 165px;
+    /* height: 175px; position: relative; left: 303px; top: 315px; display: inline-block; */
+    height: 175px; position: relative; display: inline-block; bottom: 38px; right: 219px;
+    /* height: 175px; position: fixed; right: 741px; bottom: 165px; */
     background-color: white !important;
 }
 .pokedex-pokemon-name { border: 2px dotted black; border-radius: 5px; margin-bottom: 10px; } /* Pokédex Pokémon Name */
