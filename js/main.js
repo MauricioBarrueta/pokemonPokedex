@@ -1,38 +1,58 @@
-const pokemonContainer = document.querySelector('.pokemon-container');
-const btnShowPokemonList = document.querySelector('.btn-show-pokemon-list');
-const btnHidePokemonList = document.querySelector('.btn-hide-pokemon-list');
-const totalPokemonToList = document.getElementById('totalPokemonList');
-
-const spinnerSpan = document.getElementById('spinnerSpan');
-
 const btnGetPokemonByName = document.querySelector('.btnGetPokemonByName');
 const pokemonNameValue = document.getElementById('getPokemonByName');
 const pokedexContainer = document.querySelector('.pokedex-main');
 const pokedexForm = document.querySelector('.pokedex-form');
 
+const pokemonContainer = document.querySelector('.pokemon-container');
+const btnShowPokemonList = document.querySelector('.btn-show-pokemon-list');
+const btnHidePokemonList = document.querySelector('.btn-hide-pokemon-list');
+const totalPokemonToList = document.getElementById('totalPokemonList');
+
+const spinnerSpan = document.getElementById('spinnerSpan'); /* Alert Span */
+
+const alertDialog = document.getElementById('alert');
+const alertText = document.getElementById('alert-text');
+const closeAlert = document.querySelector('.close-alert');
+
 /* Colores para los diferentes tipos de Pokémon */
 const pokemonTypeColors = {
-	fire: '#FDDFDF', grass: '#DEFDE0', electric: '#FCF7DE', water: '#DEF3FD', ground: '#F4E7DA', rock: '#D5D5D4', fairy: '#FCEAFF',	
-    poison: '#98D7A5', bug: '#F8D5A3', dragon: '#97B3E6', psychic: '#EAEDA1', flying: '#F5F5F5', fighting: '#E6E0D4', normal: '#F5F5F5',
-    ghost: '#735797', dark: '#705746', ice: '#96D9D6'
+	fire: '#E87A3D', grass: '#82C95B', electric: '#E7C536', water: '#639CE4', ground: '#CEB250', rock: '#BAA85E', fairy: '#E8B0EB',	
+    poison: '#B369AF', bug: '#ACC23E', dragon: '#8572C8', psychic: '#E96C95', flying: '#90AAD7', fighting: '#C45D4C', normal: '#ACAD99',
+    ghost: '#816DB6', dark: '#79726B', ice: '#81CFD7'
 };
 const pokemonMainTypes = Object.keys(pokemonTypeColors); /* --------------INVESTIGAR EN EL VIDEO------------------------- */
 
-/* --------------------------------------------------------------- POKÉDEX ---------------------------------------------------------------- */
-/* Función que obtiene el Pokémon de acuerdo al nombre y valida si existe */
-const getPokemonByName = event => {
-    event.preventDefault(); /* Previene el log al hacer submit */
-    fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonNameValue.value.toLowerCase()}`)
-    .then(res =>{
-        return res.status == 404 ? alert('El Pokémon que intentas buscar no existe') : res.json()}) 
-    .then(data => {        
-        pokedexContainer.innerHTML = '';
-        fetchingPokemon();
-        createPokemonCardPokedex(data);
-    })
-    .catch(error => console.log(error))
+/* Muestra un modal con un 'loader' con un span dinámico */
+function fetchingData() {
+    $('.modalSpinner').css('visibility', 'visible');
+    $('.modalSpinner').modal('show');
+    setTimeout(function () {
+        $('.modalSpinner').modal('hide');
+    }, 2500);
 }
 
+/* --------------------------------------------------------------- POKÉDEX ---------------------------------------------------------------- */
+/* Función que obtiene el Pokémon de acuerdo al nombre y valida si existe */
+const renderPokemonPokedex = event => {
+    event.preventDefault();    
+    spinnerSpan.innerHTML = 'Obteniendo datos...'; 
+    if (!pokemonNameValue.value == "") {
+        fetchingData()
+        fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonNameValue.value.toLowerCase()}`)
+            .then(res => { return res.status == 404 ? showDialog() : res.json(); })
+            .then(data => {
+                pokedexContainer.innerHTML = '';
+                createPokemonCardPokedex(data);
+            })
+            .catch(error => console.log(error))
+    } else {
+        showDialog();
+        alertText.innerHTML = 'Ingresa el Pokémon que deseas buscar';         
+    }     
+}
+btnGetPokemonByName.addEventListener('click', renderPokemonPokedex);
+
+/* Función que renderiza los datos del Pokémon para mostrarlos en el Pokédex */
 function createPokemonCardPokedex (data) {
     const pokedexCard = document.createElement('div');
     pokedexCard.classList.add('pokedex-pokemon-card');
@@ -89,33 +109,18 @@ function createPokemonCardPokedex (data) {
             pokedexCard.appendChild(pokemonStats);  
         });        
     }
-
     renderPokemonTypes(types); /* Tipo(s) */
     renderPokemonStats(stats); /* Estadísticas */     
     
     const number = document.createElement('p');
     number.classList.add('pokedex-pokemon-id');
     number.textContent = `#${data.id.toString().padStart(3, 0)}` /* padStart(): Añade 2 '0' al principio */
-
     pokedexCard.appendChild(number); /* No. del Pokémon */
 
     pokedexContainer.appendChild(pokedexCard); 
 }
 
-/* Muestra un modal con un 'loader' al dar clic en mostrar los Pokémon */
-function fetchingPokemon() {
-    spinnerSpan.innerHTML = 'Buscando...';
-    $('.modalSpinner').css('visibility', 'visible');
-
-    $('.modalSpinner').modal('show');
-    setTimeout(function () {
-        $('.modalSpinner').modal('hide');
-    }, 2000);
-}
-btnGetPokemonByName.addEventListener('click', getPokemonByName);
-
-
-/* ------------------------------------------------------------ LISTA ---------------------------------------------------------------------- */
+/* ------------------------------------------------------------------ LISTA ---------------------------------------------------------------- */
 /* Función que obtiene los datos del Pokémon */
 const getPokemonList = id => {
     fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
@@ -126,33 +131,25 @@ const getPokemonList = id => {
     .catch(error => console.error(error))	
 };
 
-/* Muestra un modal con un 'loader' al dar clic en mostrar los Pokémon */
-function fetchingDataSpinner() {
-    spinnerSpan.innerHTML = 'Cargando datos...';
-    $('.modalSpinner').css('visibility', 'visible');
-    $('.modalSpinner').modal('show');
-    setTimeout(function () {
-        $('.modalSpinner').modal('hide');
-    }, 2500);
-}
-
 /* Obtiene la cantidad de Pókemon especificada en la variable */
 const generatePokemonList = () => {
     pokemonContainer.innerHTML = '';
-    for (let i = 1; i <= totalPokemonToList.value; i++) {        
-        fetchingDataSpinner();
+    spinnerSpan.innerHTML = 'Cargando datos y generando lista...';
+    fetchingData();
+    for (let i = 1; i <= totalPokemonToList.value; i++) {   
         getPokemonList(i);
     }
 };
 btnShowPokemonList.addEventListener('click', function(){
-    totalPokemonToList.value <= 905 ?  generatePokemonList() : showDialog();
+    totalPokemonToList.value <= 905 && !totalPokemonToList.value == "" ?  generatePokemonList() : showDialog();
 });
 
 /* Resetea el container de los Pokémon */
 const resetPokemonContainer = () => {
-    fetchingDataSpinner();
-    spinnerSpan.innerHTML = 'Ocultando datos...';
+    fetchingData();
+    spinnerSpan.innerHTML = 'Limpiando el contenido...';
     pokemonContainer.innerHTML = '';
+    totalPokemonToList.innerHTML = '';
 }
 btnHidePokemonList.addEventListener('click', resetPokemonContainer);
 
@@ -192,8 +189,13 @@ function createPokemonCard(pokemonData) {
             typeTextElement.classList.add('pokemon-type');
             typeTextElement.textContent = type.type.name;
 
-            const pokemonTypesList = pokemonData.types.map(type => type.type.name);
-            const pokemonType = pokemonMainTypes.find(type => pokemonTypesList.indexOf(type) > -1);
+            const typeOne = pokemonTypeColors[types[0].type.name];
+            const typeTwo = types[1] ? pokemonTypeColors[types[1].type.name] : types[0].type.name;
+            pokemonTypes.style.background = `radial-gradient(${typeTwo} 33%, ${typeOne} 33%)`;
+            pokemonTypes.style.backgroundSize = '13.5px 13.5px';
+
+            const pokemonTypesData = pokemonData.types.map(type => type.type.name);
+            const pokemonType = pokemonMainTypes.find(type => pokemonTypesData.indexOf(type) > -1);
             const color = pokemonTypeColors[pokemonType];
             card.style.backgroundColor = color;
             pokemonTypes.style.backgroundColor = color;
@@ -219,80 +221,39 @@ function createPokemonCard(pokemonData) {
             card.appendChild(pokemonStats);  
         });        
     }
-
     renderPokemonTypes(types); /* Tipo(s) */
     renderPokemonStats(stats); /* Estadísticas */ 
 
     pokemonContainer.appendChild(card);
 }
 
-
-
-
-const alertDialog = document.getElementById('alert');
-const alertText = document.getElementById('alert-text');
-const closeAlert = document.querySelector('.close-alert');
-const showDialog = () => {
+/* Muestra un Alert dependiendo la acción que lo requiera */
+const showDialog = () => {   
+    alertText.innerHTML = 'No existe este Pokémon';
     alertDialog.classList.remove('hide');
-    alertDialog.classList.add('show');  
-
-    if(totalPokemonToList.value > 905) {
-        alertText.innerHTML = 'Error, no hay más de 905 Pokémones';
-        pokemonContainer.innerHTML = '';
-    } 
+    alertDialog.classList.add('show'); 
+    // alertText.innerHTML = 'No existe este Pokémon'; 
+    // if(pokemonNameValue.value == "") {
+    //     alertText.innerHTML = 'joder que me gusta el ano';
+    //     pokedexContainer.innerHTML = '';
+    // }
+    // if(totalPokemonToList.value > 905) {
+    //     alertText.innerHTML = 'Has pasado el límite de Pokémones existentes';
+    //     pokemonContainer.innerHTML = '';
+    // } else if(totalPokemonToList.value == "") {
+    //     alertText.innerHTML = 'No has ingresado ninguna cantidad';
+    //     pokemonContainer.innerHTML = '';
+    // }    
 }
+
+/* Función que permite cerrar al Alert */
 closeAlert.addEventListener('click', function() {
     alertDialog.classList.remove('show');
     alertDialog.classList.add('hide'); 
+    pokemonNameValue.value = "";
+    totalPokemonToList.value = "";
 })
-
-
-
-
-// SOCIAL PANEL JS
-// const floating_btn = document.querySelector('.floating-btn');
-// const close_btn = document.querySelector('.close-btn');
-// const social_panel_container = document.querySelector('.social-panel-container');
-
-// floating_btn.addEventListener('click', () => {
-// 	social_panel_container.classList.toggle('visible')
-// });
-
-// close_btn.addEventListener('click', () => {
-// 	social_panel_container.classList.remove('visible')
-// });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* Bootstrap Tooltip */
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-
-

@@ -17,14 +17,14 @@
 </head>
 
 <body>
-    <span class="spanAlert"> 
-        Página no optimizada para dispositivos móviles 
-    </span>
+    <!-- Warning Span -->
+    <span class="spanAlert"> Página no optimizada para dispositivos móviles </span>
+
     <h1 class="pokedex-title">Pokédex</h1>
     <!-- Pokédex Input -->
     <div class="pokedex-pokemon">            
         <input type="text" id="getPokemonByName" class="form-label" placeholder="Ingresa el nombre del Pokémon">
-        <button class="btnGetPokemonByName">
+        <button class="btnGetPokemonByName" title="Buscar">
             <img src="svg/pokeball.svg" alt="">
         </button>                   
     </div>
@@ -36,21 +36,27 @@
 
     <!-- Pokémon List -->
     <div class="show-pokemon-list">
+        <!-- Pokémon List Input -->
         <div class="pokemon-list-input">
-            <span>O mostrar la cantidad de: 
-                <input type="text" id="totalPokemonList" class="form-label" placeholder="Ingresa la cantidad"> Pokémones 
+            <span>Ingresa la cantidad de Pokémones existentes que deseas ver: 
+                <input type="number" id="totalPokemonList" class="form-label" placeholder="Cantidad" pattern="[0-9]+">
             </span>
         </div>
-        <!-- <p>Mostrar la lista de los Pokémon:</p>&nbsp; -->
-        <button class="btn btn-info btn-show-pokemon-list">Mostrar</button>
-        <button class="btn btn-success btn-hide-pokemon-list">Ocultar</button>        
-    </div>
+        <button class="btn btn-success btn-show-pokemon-list" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Mostrar">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+        <button class="btn btn-danger btn-hide-pokemon-list" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Limpiar">
+            <i class="fa-solid fa-delete-left"></i>
+        </button>        
+    </div>    
+    <!-- Pokémon List Container -->
     <div class="pokemon-container"></div>
 
+    <!-- Alert Span -->
     <div class="alert hide" id="alert">
         <span class="fas fa-exclamation-circle"></span>
         <span class="alert-text" id="alert-text"></span>
-        <span class="close-alert">
+        <span class="close-alert" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Cerrar">
             <span class="fas fa-times"></span>
         </span>
     </div>
@@ -59,7 +65,7 @@
     <div class="modalSpinner modal fade" tabindex="-1" role="dialog" id="spinnerModal">
         <div class="modal-dialog modal-dialog-centered justify-content-center" role="document" style="box-shadow: none;">
           <span id="spinnerSpan">Cargando datos...</span>&nbsp;
-          <i class="fa-solid fa-spinner fa-spin fa-8x"></i>
+          <i class="fa-solid fa-gear fa-spin"></i>
         </div>
     </div>    
 
