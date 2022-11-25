@@ -17,37 +17,35 @@
 </head>
 
 <body>
-    <!-- Warning Span -->
-    <span class="spanAlert"> Página no optimizada para dispositivos móviles </span>
-
     <h1 class="pokedex-title">Pokédex</h1>
     <!-- Pokédex Input -->
     <div class="pokedex-pokemon">            
-        <input type="text" id="getPokemonByName" class="form-label" placeholder="Ingresa el nombre del Pokémon">
+        <input type="text" id="getPokemonByName" class="form-label" placeholder="Nombre del Pokémon &#xf002">
         <button class="btnGetPokemonByName" title="Buscar">
             <img src="svg/pokeball.svg" alt="">
         </button>                   
-    </div>
-    <!-- Pokédex Container -->
-    <div class="pokedex-container">         
-        <!-- Pokédex Pokémon Card Container -->
-        <div class="pokedex-main"></div>
-    </div>
-
+    </div>    
+    <main>
+        <!-- Pokédex Background Image -->
+        <img src="img/pokedex background.png" alt="pokedex" class="pokedex-main">    
+        <!-- Pokédex Container -->
+        <div class="pokedex-container">   
+          <!-- Pokédex Pokémon Card Container -->
+          <div class="pokedex-main"></div>
+        </div>    
+      </main>
     <!-- Pokémon List -->
     <div class="show-pokemon-list">
-        <!-- Pokémon List Input -->
-        <div class="pokemon-list-input">
-            <span>Ingresa la cantidad de Pokémones existentes que deseas ver: 
-                <input type="number" id="totalPokemonList" class="form-label" placeholder="Cantidad" pattern="[0-9]+">
-            </span>
-        </div>
-        <button class="btn btn-success btn-show-pokemon-list" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Mostrar">
+        <!-- Pokémon List Input -->    
+        <input type="number" id="totalPokemonList" class="form-label" placeholder="Cantiad de Pokémones a listar:" pattern="[0-9]+">
+        <button class="btn btn-success btn-show-pokemon-list" data-bs-toggle="tooltip" data-bs-placement="top"
+            data-bs-title="Mostrar">
             <i class="fa-solid fa-magnifying-glass"></i>
         </button>
-        <button class="btn btn-danger btn-hide-pokemon-list" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Limpiar">
+        <button class="btn btn-danger btn-hide-pokemon-list" data-bs-toggle="tooltip" data-bs-placement="top"
+            data-bs-title="Limpiar">
             <i class="fa-solid fa-delete-left"></i>
-        </button>        
+        </button>
     </div>    
     <!-- Pokémon List Container -->
     <div class="pokemon-container"></div>
@@ -64,7 +62,7 @@
     <!-- Fetching Data Modal -->
     <div class="modalSpinner modal fade" tabindex="-1" role="dialog" id="spinnerModal">
         <div class="modal-dialog modal-dialog-centered justify-content-center" role="document" style="box-shadow: none;">
-          <span id="spinnerSpan">Cargando datos...</span>&nbsp;
+          <span id="spinnerSpan">Cargando...</span>&nbsp;
           <i class="fa-solid fa-gear fa-spin"></i>
         </div>
     </div>    
