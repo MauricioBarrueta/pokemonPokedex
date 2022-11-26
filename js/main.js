@@ -13,9 +13,12 @@ const closeAlert = document.querySelector('.close-alert');
 
 /* Colores para los diferentes tipos de Pokémon */
 const pokemonTypeColors = {
-	fire: '#E87A3D', grass: '#82C95B', electric: '#E7C536', water: '#639CE4', ground: '#CEB250', rock: '#BAA85E', fairy: '#E8B0EB',	
-    poison: '#B369AF', bug: '#ACC23E', dragon: '#8572C8', psychic: '#E96C95', flying: '#90AAD7', fighting: '#C45D4C', normal: '#ACAD99',
-    ghost: '#816DB6', dark: '#79726B', ice: '#81CFD7'
+	// fire: '#E87A3D', grass: '#82C95B', electric: '#E7C536', water: '#639CE4', ground: '#CEB250', rock: '#BAA85E', fairy: '#E8B0EB',	
+    // poison: '#B369AF', bug: '#ACC23E', dragon: '#8572C8', psychic: '#E96C95', flying: '#90AAD7', fighting: '#C45D4C', normal: '#ACAD99',
+    // ghost: '#816DB6', dark: '#79726B', ice: '#81CFD7'
+    normal: '#AAB09F', fire: '#EA7A3C',	water: '#539AE2', electric: '#E5C531', grass: '#71C558', ice: '#70CBD4', fighting: '#CB5F48',
+	poison: '#B468B7', ground: '#CC9F4F', flying: '#7DA6DE', psychic: '#E5709B', bug: '#94BC4A', rock: '#B2A061', ghost: '#846AB6',
+	dragon: '#6A7BAF', dark: '#736C75', steel: '#89A1B0', fairy: '#E397D1'
 };
 const pokemonMainTypes = Object.keys(pokemonTypeColors); /* --------------INVESTIGAR EN EL VIDEO------------------------- */
 
@@ -37,14 +40,14 @@ const renderPokemonPokedex = event => {
         closeAlertSpan()      
         fetchingData()
         fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonNameValue.value.toLowerCase()}`)
-            .then(res => { return res.status == 404 ? showDialog() : res.json(); })
+            .then(res => { return res.status == 404 ? showAlertSpan() : res.json(); })
             .then(data => {
                 pokedexContainer.innerHTML = '';
                 createPokemonCardPokedex(data);
             })
             .catch(error => console.log(error))
     } else {
-        showDialog();
+        showAlertSpan();
         alertText.innerHTML = 'Ingresa el Pokémon que deseas buscar';         
     }     
 }
@@ -113,7 +116,7 @@ function createPokemonCardPokedex (data) {
 }
 
 /* ------------------------------------------------------------------ LISTA ---------------------------------------------------------------- */
-/* Función que obtiene los datos del Pokémon */
+/* Función que obtiene los datos del Pokémon  */
 const getPokemonList = id => {
     fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
         .then(res => res.json())
@@ -126,10 +129,10 @@ const getPokemonList = id => {
 /* Renderiza los Pokémones de acuerdo a la cantidad ingresada en el Input */
 const generatePokemonList = () => {
     if(totalPokemonToList.value == "") {
-        showDialog();
+        showAlertSpan();
         alertText.innerHTML = 'No has ingresado ninguna cantidad para listar';
     } else if(totalPokemonToList.value > 905) {
-        showDialog();
+        showAlertSpan();
         alertText.innerHTML = 'Has superado el límite de Pokémones existentes';
     } else {    
         closeAlertSpan()
@@ -142,7 +145,7 @@ const generatePokemonList = () => {
 };
 btnShowPokemonList.addEventListener('click', generatePokemonList);
 
-/* Resetea el container de los Pokémon */
+/* Resetea el container de la lista de los Pokémon */
 const resetPokemonContainer = () => {
     fetchingData();
     pokemonContainer.innerHTML = '';
@@ -177,8 +180,7 @@ function createPokemonCard(pokemonData) {
     pokemonTypes.classList.add('pokemon-types');
     const pokemonStats = document.createElement('div');
     pokemonStats.classList.add('pokemon-stats');
-    const {stats, types} = pokemonData;  
-    
+    const {stats, types} = pokemonData;      
     /* Obtiene la lista del dato o los datos correspondientes al tipo de Pokémon */
     const renderPokemonTypes = types => {
         types.forEach(type => {
@@ -200,8 +202,7 @@ function createPokemonCard(pokemonData) {
             pokemonTypes.appendChild(typeTextElement);
             card.appendChild(pokemonTypes);            
         });
-    }    
-   
+    }       
     /* Obtiene la lista de los datos correspondientes a las estadísticas del Pokémon */
     const renderPokemonStats = stats => {
         stats.forEach(stat => {
@@ -225,7 +226,7 @@ function createPokemonCard(pokemonData) {
 }
 
 /* Muestra un Alert dependiendo la acción que lo requiera */
-const showDialog = () => {   
+const showAlertSpan = () => {   
     alertText.innerHTML = 'No existe este Pokémon';
     alertDialog.classList.remove('hide');
     alertDialog.classList.add('show');     
