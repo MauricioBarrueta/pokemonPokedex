@@ -26,7 +26,7 @@ function fetchingData() {
     $('.modalSpinner').modal('show');
     setTimeout(function () {
         $('.modalSpinner').modal('hide');
-    }, 3000);
+    }, 2500);
 }
 
 /* --------------------------------------------------------------- POKÉDEX ---------------------------------------------------------------- */
