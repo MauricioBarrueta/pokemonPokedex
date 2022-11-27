@@ -1,0 +1,23 @@
+{
+  "name": "pokedex",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "npx gh-pages -d ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/MauricioBarrueta/Pokedex.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MauricioBarrueta/Pokedex/issues"
+  },
+  "homepage": "https://github.com/MauricioBarrueta/Pokedex#readme",
+  "dependencies": {
+    "gh-pages": "^4.0.0"
+  }
+}
