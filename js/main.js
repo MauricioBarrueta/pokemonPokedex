@@ -168,13 +168,8 @@ function createPokemonCard(pokemonData) {
     sprite.src = pokemonData.sprites.front_default;
     spriteContainer.appendChild(sprite);
 
-    const number = document.createElement('p');
-    number.classList.add('pokemon-id');
-    number.textContent = `#${pokemonData.id.toString().padStart(3, 0)}` /* padStart(): Añade 2 '0' al principio */    
-
     card.appendChild(name); /* Nombre */
     card.appendChild(spriteContainer); /* Imagen */
-    card.appendChild(number); /* No. del Pokémon */
 
     const pokemonTypes = document.createElement('div');
     pokemonTypes.classList.add('pokemon-types');
@@ -191,13 +186,12 @@ function createPokemonCard(pokemonData) {
             const typeOne = pokemonTypeColors[types[0].type.name];
             const typeTwo = types[1] ? pokemonTypeColors[types[1].type.name] : types[0].type.name;
             pokemonTypes.style.background = `radial-gradient(${typeTwo} 33%, ${typeOne} 33%)`;
-            pokemonTypes.style.backgroundSize = '13.5px 13.5px';
+            pokemonTypes.style.backgroundSize = '16px 16px';
 
             const pokemonTypesData = pokemonData.types.map(type => type.type.name);
             const pokemonType = pokemonMainTypes.find(type => pokemonTypesData.indexOf(type) > -1);
             const color = pokemonTypeColors[pokemonType];
-            card.style.backgroundColor = color;
-            pokemonTypes.style.backgroundColor = color;
+            card.style.backgroundColor = color;            
 
             pokemonTypes.appendChild(typeTextElement);
             card.appendChild(pokemonTypes);            
@@ -219,8 +213,13 @@ function createPokemonCard(pokemonData) {
             card.appendChild(pokemonStats);  
         });        
     }
+    const number = document.createElement('p');
+    number.classList.add('pokemon-id');
+    number.textContent = `#${pokemonData.id.toString().padStart(3, 0)}` /* padStart(): Añade 2 '0' al principio */    
+    
     renderPokemonTypes(types); /* Tipo(s) */
     renderPokemonStats(stats); /* Estadísticas */ 
+    card.appendChild(number); /* No. del Pokémon */
 
     pokemonContainer.appendChild(card);
 }
