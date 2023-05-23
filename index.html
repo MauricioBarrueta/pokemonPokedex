@@ -19,34 +19,35 @@
     <!-- Pokédex Input -->
     <div class="pokedex-pokemon">            
         <input type="text" id="getPokemonByName" class="form-label" placeholder="Nombre del Pokémon &#xf002">
-        <button class="btnGetPokemonByName" title="Buscar">
+        <button class="btnGetPokemonByName" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Buscar">
             <img src="svg/pokeball.svg" alt="">
         </button>                   
-    </div>    
+    </div>   
+    <!-- Pokédex Container --> 
     <main>
-        <!-- Pokédex Background Image -->
         <img src="img/pokedex background.png" alt="pokedex" class="pokedex-main">    
-        <!-- Pokédex Container -->
         <div class="pokedex-container">   
-          <!-- Pokédex Pokémon Card Container -->
           <div class="pokedex-main"></div>
         </div>    
     </main>
-    <!-- Pokémon List -->
+
+    <!-- Pokémon List Input -->
     <div class="show-pokemon-list">
-        <!-- Pokémon List Input -->    
         <input type="number" id="totalPokemonList" class="form-label" placeholder="Cantiad de Pokémones para mostrar:" pattern="[0-9]+">
-        <button class="btn btn-success btn-show-pokemon-list" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Mostrar">
-            <i class="fa-solid fa-angle-down"></i>
-        </button>
-        <button class="btn btn-danger btn-hide-pokemon-list" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Limpiar">
-            <i class="fa-solid fa-angle-up"></i>
-        </button>
+        <button class="btn btn-success btn-show-pokemon-list" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Mostrar"></button>
+        <button class="btn btn-danger btn-hide-pokemon-list" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Limpiar"></button>
     </div>    
 
     <!-- Pokémon List Container -->
     <div class="pokemon-container"></div>
 
+     <!-- Fetching Data Modal -->
+     <div class="modalSpinner modal fade" tabindex="-1" role="dialog" id="spinnerModal">
+        <div class="modal-dialog modal-dialog-centered justify-content-center" role="document" style="box-shadow: none;">
+          <span id="spinnerSpan">Procesando...</span>&nbsp;
+          <i class="fa-solid fa-gear fa-spin"></i>
+        </div>
+    </div>   
     <!-- Alert Span -->
     <div class="alert hide" id="alert">
         <span class="fas fa-exclamation-circle"></span>
@@ -54,15 +55,7 @@
         <span class="close-alert" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Cerrar">
             <span class="fas fa-times"></span>
         </span>
-    </div>
-
-    <!-- Fetching Data Modal -->
-    <div class="modalSpinner modal fade" tabindex="-1" role="dialog" id="spinnerModal">
-        <div class="modal-dialog modal-dialog-centered justify-content-center" role="document" style="box-shadow: none;">
-          <span id="spinnerSpan">Cargando...</span>&nbsp;
-          <i class="fa-solid fa-gear fa-spin"></i>
-        </div>
-    </div>    
+    </div>   
 
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>

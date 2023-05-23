@@ -38,12 +38,12 @@ main { display: inline-block;  position: relative; padding: 10px; }
   .pokedex-pokemon .btnGetPokemonByName { /* Pokédex Button */
     background: transparent; border: none; cursor: pointer; margin-right: 5px;
   }
-  .pokedex-pokemon .btnGetPokemonByName img { width: 50px; height: 50px; transition: 0.3s; }
-  .pokedex-pokemon .btnGetPokemonByName img:hover { scale: 1.1; }
+  .pokedex-pokemon .btnGetPokemonByName img { width: 50px; height: 50px; transition: all 0.3s; animation: fa-shake 2s infinite; }
+  .pokedex-pokemon .btnGetPokemonByName img:hover { scale: 1.05; animation: none; }
 
 .pokedex-main { /* Pokedex Background Image */
     width: 100%; max-width: 425px; 
-    box-shadow: rgba(50, 50, 93, 0.8) 0px 13px 27px -5px, rgba(0, 0, 0, 0.5) 0px 8px 16px -8px; 
+    filter: drop-shadow(5px 5px 5px #000);
 } 
 .pokedex-img-container img { position: absolute; bottom: 52%; left: 38%;  height: 15%; transition: 0.2s; } /* Pokédex Pokémon Image Container */
 .pokedex-pokemon-id {
@@ -84,9 +84,13 @@ main { display: inline-block;  position: relative; padding: 10px; }
     border-radius: 5px; font-size: 12px; padding-left: 0.5rem; margin: 5px 5px 10px 5px;
 }
 .show-pokemon-list input:invalid { border: 3px solid #CC0000; color: #CC0000; }    
-.show-pokemon-list button { border: 2px dotted white;  }
-.show-pokemon-list i { margin: 2px; }
-
+.show-pokemon-list button { width: 50px; height: auto; }
+.btn-show-pokemon-list::after, .btn-hide-pokemon-list::after {
+    font-family: FontAwesome; font-size: 20px; display: inline-block; 
+}
+.btn-show-pokemon-list:hover::after, .btn-hide-pokemon-list:hover::after { animation: fa-bounce 1s; animation-iteration-count: 1; }
+.btn-show-pokemon-list::after { content: "\f002"; }
+.btn-hide-pokemon-list::after { content: "\f51a"; }
 .pokemon-container { flex-wrap: wrap; margin: 10px auto; } /* Pokémon Cards Container */
 .pokemon-card {
     width: 300px; max-height: 475px; height: 475px;
@@ -98,11 +102,11 @@ main { display: inline-block;  position: relative; padding: 10px; }
     border-radius: 5px; padding: 2px; margin: 5px; color: whitesmoke;  
 }
 .img-container { 
-    padding: 0.5rem; margin: 10px 10px 5px 10px; border-radius: 50%; border: 2px dotted rgba(255, 255, 255, 0.5);
+    padding: 0.5rem; margin: 10px 10px 5px 10px; border-radius: 50%;
     background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 35%, rgba(0,212,255,0) 100%); 
 }
-.img-container img { scale: 1.2; transition: 0.2s; }
-.img-container img:hover { scale: 1.3;  cursor: pointer; }
+.img-container img { scale: 1.2; transition: 0.2s; display: inline-block; }
+.img-container img:hover { cursor: pointer; animation: fa-bounce 1s; }
 .pokemon-id { text-align: right; font-size: 8px; margin: 0 10px 0 0; color: whitesmoke;  } 
 .pokemon-types { 
     text-align: center; font-size: 14px; text-transform: capitalize; text-decoration: underline 2px dotted;
@@ -150,7 +154,7 @@ main { display: inline-block;  position: relative; padding: 10px; }
 .close-alert:hover { background: #FFC766; }
 .close-alert .fa-times { color: #CE8500; font-size: 20px; line-height: 40px; } /* Alert Span Button Icon */
 
-.tooltip .tooltip-inner { font-size: 12px; border: 2px dotted whitesmoke; }
+.tooltip .tooltip-inner { font-size: 10px; opacity: 0.9; }
 
 /* ---------------------------------------------------------- MEDIA SCREEN RESPONSIVE ------------------------------------------------------- */
 @media screen and (max-width: 650px) {
