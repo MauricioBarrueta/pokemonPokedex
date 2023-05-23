@@ -1,24 +1,18 @@
-const btnGetPokemonByName = document.querySelector('.btnGetPokemonByName');
-const pokemonNameValue = document.getElementById('getPokemonByName');
-const pokedexContainer = document.querySelector('.pokedex-container');
-const pokemonContainer = document.querySelector('.pokemon-container');
-const btnShowPokemonList = document.querySelector('.btn-show-pokemon-list');
-const btnHidePokemonList = document.querySelector('.btn-hide-pokemon-list');
+const btnPokemonByName = document.querySelector('.btnGetPokemonByName'), pokemonNameValue = document.getElementById('getPokemonByName');
+const pokedexContainer = document.querySelector('.pokedex-container'), pokemonContainer = document.querySelector('.pokemon-container');
+const btnShowPokemonList = document.querySelector('.btn-show-pokemon-list'), btnHidePokemonList = document.querySelector('.btn-hide-pokemon-list');
 const totalPokemonToList = document.getElementById('totalPokemonList');
-const alertDialog = document.getElementById('alert');
-const alertText = document.getElementById('alert-text');
-const closeAlert = document.querySelector('.close-alert');
+const alertDialog = document.getElementById('alert'), alertText = document.getElementById('alert-text'), closeAlert = document.querySelector('.close-alert');
 
-/* Colores de los tipos de Pokémon que existen */
+/* Colores de los tipos de Pokémon existentes */
 const pokemonTypesColors = {
     normal: '#AAB09F', fire: '#EA7A3C',	water: '#539AE2', electric: '#E5C531', grass: '#71C558', ice: '#70CBD4', fighting: '#CB5F48',
 	poison: '#B468B7', ground: '#CC9F4F', flying: '#7DA6DE', psychic: '#E5709B', bug: '#94BC4A', rock: '#B2A061', ghost: '#846AB6',
 	dragon: '#6A7BAF', dark: '#736C75', steel: '#89A1B0', fairy: '#E397D1'
 };
-const pokemonTypeBackgroundColor = Object.keys(pokemonTypesColors);
+const pokemonTypeBgColor = Object.keys(pokemonTypesColors);
 
-/* --------------------------------------------------------------- MODAL ------------------------------------------------------------------ */
-/* Se muestra un loader antes de realizar cualquier función */
+/* Se muestra un loader al realizar cualquier aacción */
 function fetchingDataModal() {
     $('.modalSpinner').css('visibility', 'visible');
     $('.modalSpinner').modal('show');
@@ -27,7 +21,6 @@ function fetchingDataModal() {
     }, 2500);
 }
 
-/* --------------------------------------------------------------- POKÉDEX ---------------------------------------------------------------- */
 /* Función que obtiene el Pokémon de acuerdo al nombre y valida si existe */
 const getPokemonCardToPokedex = event => {
     event.preventDefault();    
@@ -46,7 +39,7 @@ const getPokemonCardToPokedex = event => {
         alertText.innerHTML = 'Ingresa el Pokémon que deseas buscar';         
     }     
 }
-btnGetPokemonByName.addEventListener('click', getPokemonCardToPokedex);
+btnPokemonByName.addEventListener('click', getPokemonCardToPokedex);
 
 /* Función que renderiza los datos del Pokémon para mostrarlos en el Pokédex */
 function renderPokemonDataToPokedex (data) {
@@ -73,7 +66,6 @@ function renderPokemonDataToPokedex (data) {
 
     const pokemonTypes = document.createElement('div'); /* Pokémon Type(s) */
     pokemonTypes.classList.add('pokedex-pokemon-types'); 
-
     const pokemonStats = document.createElement('div'); /* Pokémon Stats */
     pokemonStats.classList.add('pokedex-pokemon-stats');
     const {stats, types} = data; 
@@ -111,7 +103,6 @@ function renderPokemonDataToPokedex (data) {
     pokedexContainer.appendChild(pokedexCard); /* Se adjuntan todos los elementos al Container */
 }
 
-/* ------------------------------------------------------------------ LISTA ---------------------------------------------------------------- */
 /* Función que obtiene los datos del Pokémon  */
 const getPokemonCardToList = id => {
     fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
@@ -145,7 +136,7 @@ btnShowPokemonList.addEventListener('click', generatePokemonListByQuantity);
 const cleanPokemonListContainer = () => {
     fetchingDataModal();
     pokemonContainer.innerHTML = '';
-    totalPokemonToList.innerHTML = '';
+    totalPokemonToList.value = '';
 }
 btnHidePokemonList.addEventListener('click', cleanPokemonListContainer);
 
@@ -188,7 +179,7 @@ function renderPokemonDataToCardList(pokemonData) {
             pokemonTypes.style.backgroundSize = '16px 16px';
 
             const pokemonTypesData = pokemonData.types.map(type => type.type.name);
-            const pokemonType = pokemonTypeBackgroundColor.find(type => pokemonTypesData.indexOf(type) > -1);
+            const pokemonType = pokemonTypeBgColor.find(type => pokemonTypesData.indexOf(type) > -1);
             const color = pokemonTypesColors[pokemonType];
             card.style.backgroundColor = color;            
 
@@ -228,7 +219,8 @@ function renderPokemonDataToCardList(pokemonData) {
 const showAlertSpan = () => {   
     alertText.innerHTML = 'No existe este Pokémon'; /* Valor por defecto */
     alertDialog.classList.remove('hide');
-    alertDialog.classList.add('show');     
+    alertDialog.classList.add('show');   
+    setTimeout(() => { closeAlertSpan(); }, 4000);  
 }
 /* Función para ocultar el Alert Span */
 const closeAlertSpan = () => {
