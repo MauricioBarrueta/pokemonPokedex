@@ -121,12 +121,13 @@ const generatePokemonListByQuantity = () => {
     } else if(totalPokemonToList.value > 905) {
         showAlertSpan();
         alertText.innerHTML = 'Has superado el límite de Pokémones existentes';
+        totalPokemonToList.value = '';
     } else {    
         closeAlertSpan()
         fetchingDataModal();
         pokemonContainer.innerHTML = '';        
         for (let i = 1; i <= totalPokemonToList.value; i++) {
-            getPokemonCardToList(i);
+           getPokemonCardToList(i);           
         }
     } 
 };

@@ -11,14 +11,14 @@
     <!-- Main Styles -->
     <link rel="stylesheet" href="css/styles.css">
     <title>Pokédex</title>
-    <link rel="icon" type="image/x-icon" href="/svg/pokeball.svg">
+    <link rel="icon" type="image/x-icon" href="/img/pokeball.ico">
 </head>
 
 <body>
     <h1 class="pokedex-title">Pokédex</h1>
     <!-- Pokédex Input -->
     <div class="pokedex-pokemon">            
-        <input type="text" id="getPokemonByName" class="form-label" placeholder="Nombre del Pokémon &#xf002">
+        <input type="text" id="getPokemonByName" class="form-label" placeholder="Ingresa el nombre del Pokémon:">
         <button class="btnGetPokemonByName" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Buscar">
             <img src="svg/pokeball.svg" alt="">
         </button>                   
@@ -33,19 +33,18 @@
 
     <!-- Pokémon List Input -->
     <div class="show-pokemon-list">
-        <input type="number" id="totalPokemonList" class="form-label" placeholder="Cantiad de Pokémones para mostrar:" pattern="[0-9]+">
-        <button class="btn btn-success btn-show-pokemon-list" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Mostrar"></button>
-        <button class="btn btn-danger btn-hide-pokemon-list" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Limpiar"></button>
-    </div>    
-
+        <input type="number" id="totalPokemonList" class="form-label" placeholder="Ingresa una cantidad, el límite es 905:" pattern="[0-9]+">
+        <button class="btn btn-success btn-show-pokemon-list" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Listar"></button>
+        <button class="btn btn-dark btn-hide-pokemon-list" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Limpiar"></button>
+    </div> 
     <!-- Pokémon List Container -->
     <div class="pokemon-container"></div>
 
      <!-- Fetching Data Modal -->
      <div class="modalSpinner modal fade" tabindex="-1" role="dialog" id="spinnerModal">
         <div class="modal-dialog modal-dialog-centered justify-content-center" role="document" style="box-shadow: none;">
-          <span id="spinnerSpan">Procesando...</span>&nbsp;
-          <i class="fa-solid fa-gear fa-spin"></i>
+          <span id="spinnerSpan">Obteniendo datos...</span>&nbsp;
+          <i class="fa-solid fa-spinner fa-spin"></i>
         </div>
     </div>   
     <!-- Alert Span -->
