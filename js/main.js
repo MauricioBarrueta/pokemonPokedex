@@ -2,7 +2,8 @@ const btnPokemonByName = document.querySelector('.btnGetPokemonByName'), pokemon
 const pokedexContainer = document.querySelector('.pokedex-container'), pokemonContainer = document.querySelector('.pokemon-container');
 const btnShowPokemonList = document.querySelector('.btn-show-pokemon-list'), btnHidePokemonList = document.querySelector('.btn-hide-pokemon-list');
 const totalPokemonToList = document.getElementById('totalPokemonList');
-const alertDialog = document.getElementById('alert'), alertText = document.getElementById('alert-text'), closeAlert = document.querySelector('.close-alert');
+const alertDialog = document.getElementById('alert'), alertText = document.getElementById('alert-text'), 
+    closeAlert = document.querySelector('.close-alert');
 
 /* Colores de los tipos de Pokémon existentes */
 const pokemonTypesColors = {
@@ -21,7 +22,7 @@ function fetchingDataModal() {
     }, 2500);
 }
 
-/* Función que obtiene el Pokémon de acuerdo al nombre y valida si existe */
+/* Función que obtiene el Pokémon de acuerdo al nombre */
 const getPokemonCardToPokedex = event => {
     event.preventDefault();    
     if (!pokemonNameValue.value == "") {  
@@ -103,18 +104,15 @@ function renderPokemonDataToPokedex (data) {
     pokedexContainer.appendChild(pokedexCard); /* Se adjuntan todos los elementos al Container */
 }
 
-/* Función que obtiene los datos del Pokémon  */
-const getPokemonCardToList = id => {
-    fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
-        .then(res => res.json())
-        .then(data => {
-            renderPokemonDataToCardList(data);
-        })
-        .catch(error => console.error(error))
-};
-
+/* Función que obtiene los datos del Pokémon para listar */
+async function getPokemonDataToList(id) {
+    const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+    const data = await res.json();    
+    renderPokemonDataToCardList(data);
+    return data;
+}
 /* Renderiza los Pokémones de acuerdo a la cantidad ingresada en el Input */
-const generatePokemonListByQuantity = () => {
+async function generateTotalPokemonToList() {    
     if(totalPokemonToList.value == "") {
         showAlertSpan();
         alertText.innerHTML = 'No has ingresado ninguna cantidad para listar';
@@ -126,20 +124,12 @@ const generatePokemonListByQuantity = () => {
         closeAlertSpan()
         fetchingDataModal();
         pokemonContainer.innerHTML = '';        
-        for (let i = 1; i <= totalPokemonToList.value; i++) {
-           getPokemonCardToList(i);           
-        }
-    } 
-};
-btnShowPokemonList.addEventListener('click', generatePokemonListByQuantity);
-
-/* Limpia el container de la lista de los Pokémon */
-const cleanPokemonListContainer = () => {
-    fetchingDataModal();
-    pokemonContainer.innerHTML = '';
-    totalPokemonToList.value = '';
+        for (let i = 1; i <= totalPokemonToList.value; i++) {                  
+           await getPokemonDataToList(i);
+        }        
+    }    
 }
-btnHidePokemonList.addEventListener('click', cleanPokemonListContainer);
+btnShowPokemonList.addEventListener('click', generateTotalPokemonToList);
 
 /* Función que renderiza los datos del Pokémon para mostrarlos en la lista */
 function renderPokemonDataToCardList(pokemonData) {
@@ -215,6 +205,14 @@ function renderPokemonDataToCardList(pokemonData) {
 
     pokemonContainer.appendChild(card); /* Se adjuntan todos los elementos a la Card */
 }
+
+/* Limpia el container de la lista de los Pokémon */
+const cleanPokemonListContainer = () => {
+    fetchingDataModal();
+    pokemonContainer.innerHTML = '';
+    totalPokemonToList.value = '';
+}
+btnHidePokemonList.addEventListener('click', cleanPokemonListContainer);
 
 /* Muestra un Alert dependiendo la acción que lo requiera */
 const showAlertSpan = () => {   
