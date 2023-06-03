@@ -11,7 +11,7 @@ body { background: linear-gradient(to bottom, #2a75bb, #3c5aa6); text-align: cen
 main { display: inline-block;  position: relative; padding: 10px; }
 p { 
     cursor: default;
- }
+}
 
 .pokedex-pokemon, .pokedex-container, .pokemon-container { display: flex; align-items: center; justify-content: center; }
 
@@ -28,6 +28,24 @@ p {
 
 .modalSpinner { visibility: hidden; }
 .modalSpinner .fa-spin, .modalSpinner #spinnerSpan { color: white; font-size: 22px; text-align: center; } /* Modal Spinner */
+.modalSpinner .fa-spin { font-size: 28px; margin-left: 10px; }
+
+/* ------------------------------------------------------------ Scroll To Top -------------------------------------------------------------- */
+.stt {    
+    display: none; position: fixed; bottom: 12px; right: 12px; width: 60px; height: 60px;
+    background-color: var(--boUnRed); color: white; border: none; box-shadow: -2.5px -2.5px 10px 0px rgba(0,0,0,0.7) inset;
+    border-radius: 50%; padding: 0.5rem; z-index: 9997; opacity: 0.75;
+    transition: opacity 0.25s, animation 0.45s;  
+}
+.stt::after {
+    content: "\f102"; font-family: FontAwesome; font-size: 18px; 
+    display: inline-block; animation: fa-bounce 1s infinite; transition: font-size 0.35s;
+}
+.stt:hover {
+    background-color: var(--boUnRed); color: white; opacity: 1; 
+    animation: fa-bounce 1s; animation-iteration-count: 1;        
+}
+.stt:hover::after { font-size: 22px; animation: none; }
 
 /* ---------------------------------------------------------------- POKÉDEX ------------------------------------------------------------------*/
 .pokedex-title {
@@ -38,18 +56,18 @@ p {
     width: 85%; height: fit-content; border-radius: 10px;  padding: 1px; 
     background-color: var(--utahCrimson); margin: 10px auto;
     box-shadow: var(--inputBoxShadow); 
-  }  
-  .pokedex-pokemon input { /* Pokédex Input */
+}  
+.pokedex-pokemon input { /* Pokédex Input */
     width: 100%; height: 30px; color: var(--chineseBlue); 
     text-align: center; font-family: 'Press Start 2P', FontAwesome; font-size: 12px; text-transform: capitalize;
     margin: 0 15px 0 15px; border-radius: 5px; padding-left: 0.5rem; 
-  }  
-  .pokedex-pokemon input::placeholder { font-size: 10px; text-transform: none; }
-  .pokedex-pokemon .btnGetPokemonByName { /* Pokédex Button */
+}  
+.pokedex-pokemon input::placeholder { font-size: 10px; text-transform: none; }
+.pokedex-pokemon .btnGetPokemonByName { /* Pokédex Button */
     background: transparent; border: none; cursor: pointer; margin-right: 5px;
-  }
-  .pokedex-pokemon .btnGetPokemonByName img { width: 50px; height: 50px; transition: all 0.3s; animation: fa-shake 2s infinite; }
-  .pokedex-pokemon .btnGetPokemonByName img:hover { scale: 1.05; animation: none; }
+}
+.pokedex-pokemon .btnGetPokemonByName img { width: 50px; height: 50px; transition: all 0.3s; animation: fa-shake 2s infinite; }
+.pokedex-pokemon .btnGetPokemonByName img:hover { scale: 1.05; animation: none; }
 
 .pokedex-main { /* Pokedex Background Image */
     width: 100%; max-width: 425px; 
@@ -99,6 +117,9 @@ p {
 .show-pokemon-list input::placeholder { font-size: 10px; }
 .show-pokemon-list input:invalid { border: 3px solid var(--boUnRed); color: var(--boUnRed); }    
 .show-pokemon-list button { width: 50px; height: auto; }
+.btn-hide-pokemon-list { /* Clear List Button */
+    pointer-events: none;
+}
 .btn-show-pokemon-list::after, .btn-hide-pokemon-list::after {
     font-family: FontAwesome; font-size: 20px; display: inline-block; 
 }
@@ -172,6 +193,7 @@ p {
 
 /* ---------------------------------------------------------- MEDIA SCREEN RESPONSIVE ------------------------------------------------------- */
 @media screen and (max-width: 650px) {
+    .stt { width: 50px; height: 50px; }
     .pokedex-pokemon input { font-size: 10px; padding-left: 0; } /* Pokédex */
     .pokedex-pokemon input::placeholder, .show-pokemon-list input::placeholder { font-size: 8px; }
     .pokedex-img-container img { height: 14%; }
@@ -181,4 +203,5 @@ p {
     .pokemon-stats .pokemon-stat .stat-amount { font-weight: bold; }
     .show-pokemon-list input { width: 100%; height: 25px; font-size: 10px; margin: 5px 0 10px 0; padding-left: 0; } /* List */    
     .modalSpinner .fa-spin, .modalSpinner #spinnerSpan { font-size: 18px; }
+    .modalSpinner .fa-spin { font-size: 24px; }
 }

@@ -13,10 +13,19 @@ const pokemonTypesColors = {
 };
 const pokemonTypeBgColor = Object.keys(pokemonTypesColors);
 
+/* Hace visible el bóton al iniciar el scroll hacia abajo y se crea la función que permite volver al inicio */
+window.addEventListener('scroll', () => {
+    btnScrollToTop.style.display = window.scrollY > 300 ? 'block' : 'none';    
+});
+const btnScrollToTop = document.querySelector('.stt');
+btnScrollToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+});
+
 /* Se muestra un loader al realizar cualquier aacción */
 function fetchingDataModal() {
     $('.modalSpinner').css('visibility', 'visible');
-    $('.modalSpinner').modal('show');
+    $('.modalSpinner').modal('show');    
     setTimeout(function () {
         $('.modalSpinner').modal('hide');
     }, 2500);
@@ -121,12 +130,13 @@ async function generateTotalPokemonToList() {
         alertText.innerHTML = 'Has superado el límite de Pokémones existentes';
         totalPokemonToList.value = '';
     } else {    
-        closeAlertSpan()
-        fetchingDataModal();
-        pokemonContainer.innerHTML = '';        
+        closeAlertSpan()        
+        pokemonContainer.innerHTML = '';   
+        fetchingDataModal();     
         for (let i = 1; i <= totalPokemonToList.value; i++) {                  
            await getPokemonDataToList(i);
-        }        
+        }   
+        btnHidePokemonList.style.pointerEvents = 'auto';  
     }    
 }
 btnShowPokemonList.addEventListener('click', generateTotalPokemonToList);
@@ -207,10 +217,10 @@ function renderPokemonDataToCardList(pokemonData) {
 }
 
 /* Limpia el container de la lista de los Pokémon */
-const cleanPokemonListContainer = () => {
-    fetchingDataModal();
+const cleanPokemonListContainer = () => {  
+    totalPokemonToList.value = '';  
     pokemonContainer.innerHTML = '';
-    totalPokemonToList.value = '';
+    fetchingDataModal();                
 }
 btnHidePokemonList.addEventListener('click', cleanPokemonListContainer);
 
