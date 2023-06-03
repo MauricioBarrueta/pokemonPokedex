@@ -4,26 +4,26 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
-    <!-- CSS only -->
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <!-- Font Awesome Library -->    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <!-- Main Styles -->
     <link rel="stylesheet" href="css/styles.css">
+
     <title>Pokédex</title>
     <link rel="icon" type="image/x-icon" href="img/pokeball.ico">
 </head>
 
 <body>
-    <h1 class="pokedex-title">Pokédex</h1>
-    <!-- Pokédex Input -->
+    <!-- Scroll to Top Button -->
+    <button class="stt btn"></button>    
+    <!-- Pokédex -->
+    <h1 class="pokedex-title">Pokédex</h1>    
     <div class="pokedex-pokemon">            
         <input type="text" id="getPokemonByName" class="form-label" placeholder="Ingresa el nombre del Pokémon:">
         <button class="btnGetPokemonByName" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Buscar">
             <img src="svg/pokeball.svg" alt="">
         </button>                   
-    </div>   
-    <!-- Pokédex Container --> 
+    </div>  
     <main>
         <img src="img/pokedex background.png" alt="pokedex" class="pokedex-main">    
         <div class="pokedex-container">   
@@ -31,20 +31,18 @@
         </div>    
     </main>
 
-    <!-- Pokémon List Input -->
+    <!-- Pokémon List -->
     <div class="show-pokemon-list">
         <input type="number" id="totalPokemonList" class="form-label" placeholder="Ingresa una cantidad, el límite es 905:" pattern="[0-9]+">
         <button class="btn btn-success btn-show-pokemon-list" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Listar"></button>
         <button class="btn btn-dark btn-hide-pokemon-list" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Limpiar"></button>
-    </div> 
-    <!-- Pokémon List Container -->
+    </div>     
     <div class="pokemon-container"></div>
 
      <!-- Fetching Data Modal -->
      <div class="modalSpinner modal fade" tabindex="-1" role="dialog" id="spinnerModal">
         <div class="modal-dialog modal-dialog-centered justify-content-center" role="document" style="box-shadow: none;">
-          <span id="spinnerSpan">Obteniendo datos...</span>&nbsp;
-          <i class="fa-solid fa-spinner fa-spin"></i>
+          <span id="spinnerSpan">Procesando...</span><i class="fa-solid fa-spinner fa-spin"></i>
         </div>
     </div>   
     <!-- Alert Span -->
@@ -56,11 +54,8 @@
         </span>
     </div>   
 
-    <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-    <!-- jQuery Script -->
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-    <!-- Main Scripts -->
     <script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>
