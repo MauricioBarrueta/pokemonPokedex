@@ -13,17 +13,19 @@ const pokemonTypesColors = {
 };
 const pokemonTypeBgColor = Object.keys(pokemonTypesColors);
 
+const url = 'https://pokeapi.co/api/v2/pokemon'
+
 /* Hace visible el bóton al iniciar el scroll hacia abajo y se crea la función que permite volver al inicio */
 window.addEventListener('scroll', () => {
     btnScrollToTop.style.display = window.scrollY > 300 ? 'block' : 'none';    
+    btnScrollToTop.style.opacity = window.scrollY > 300 ? '1' : '0';
 });
 const btnScrollToTop = document.querySelector('.stt');
 btnScrollToTop.addEventListener('click', () => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
 });
 
-/* Se muestra un loader al realizar cualquier aacción */
-function fetchingDataModal() {
+function loaderModal() {
     $('.modalSpinner').css('visibility', 'visible');
     $('.modalSpinner').modal('show');    
     setTimeout(function () {
@@ -36,8 +38,8 @@ const getPokemonCardToPokedex = event => {
     event.preventDefault();    
     if (!pokemonNameValue.value == "") {  
         closeAlertSpan()      
-        fetchingDataModal()
-        fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonNameValue.value.toLowerCase()}`) /* Previene letras en mayúscula */
+        loaderModal()
+        fetch(`${url}/${pokemonNameValue.value.toLowerCase()}`)
             .then(res => { return res.status == 404 ? showAlertSpan() : res.json(); })
             .then(data => {
                 pokedexContainer.innerHTML = '';
@@ -113,26 +115,35 @@ function renderPokemonDataToPokedex (data) {
     pokedexContainer.appendChild(pokedexCard); /* Se adjuntan todos los elementos al Container */
 }
 
+/* Función que obtiene la cantidad total de Pokémones */
+var pokemonCount;
+const getPokemonCount = () => {
+    fetch(`${url}`)
+        .then(res => { return res.status == 404 ? console.log('Error: ' + res.status) : res.json()} )
+        .then(data => { pokemonCount = data.count; })
+}    
+getPokemonCount() 
+
 /* Función que obtiene los datos del Pokémon para listar */
 async function getPokemonDataToList(id) {
-    const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
-    const data = await res.json();    
+    const res = await fetch(`${url}/${id}`);
+    const data = await res.json();  
     renderPokemonDataToCardList(data);
     return data;
 }
 /* Renderiza los Pokémones de acuerdo a la cantidad ingresada en el Input */
-async function generateTotalPokemonToList() {    
+async function generateTotalPokemonToList() {   
     if(totalPokemonToList.value == "") {
         showAlertSpan();
         alertText.innerHTML = 'No has ingresado ninguna cantidad para listar';
-    } else if(totalPokemonToList.value > 905) {
+    } else if(totalPokemonToList.value > pokemonCount) {
         showAlertSpan();
         alertText.innerHTML = 'Has superado el límite de Pokémones existentes';
         totalPokemonToList.value = '';
     } else {    
         closeAlertSpan()        
         pokemonContainer.innerHTML = '';   
-        fetchingDataModal();     
+        loaderModal();     
         for (let i = 1; i <= totalPokemonToList.value; i++) {                  
            await getPokemonDataToList(i);
         }   
@@ -220,7 +231,7 @@ function renderPokemonDataToCardList(pokemonData) {
 const cleanPokemonListContainer = () => {  
     totalPokemonToList.value = '';  
     pokemonContainer.innerHTML = '';
-    fetchingDataModal();                
+    loaderModal();                
 }
 btnHidePokemonList.addEventListener('click', cleanPokemonListContainer);
 
