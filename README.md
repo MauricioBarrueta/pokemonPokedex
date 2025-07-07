@@ -1,8 +1,7 @@
-🇲🇽 Este sitio web permite listar todos los Pokémones de la serie Pokémon, además de poder filtrar los resultados mediante el nombre, es posible listar todos y cada uno de ellos con su respectiva carta y datos correspondientes.
+🇲🇽 Sitio web desarrollado con JavaScript, la biblioteca jQuery, CSS y Bootstrap, publicado mediante GitHub Pages y conectado a PokeAPI (pokeapi.co).
 
-🇺🇸 This website allows you to list all the Pokémon series Pokémon, besides being able to filter the results by name, it's possible to list each and every one of them with their respective letter and corresponding data.
+🇺🇸 Website developed with JavaScript, jQuery library, CSS and Bootstrap, published via GitHub Pages and connected to PokeAPI (pokeapi.co).
 
 🔗 https://mauriciobarrueta.github.io/pokemonPokedex/
 
-
-![Pokedex](https://github.com/MauricioBarrueta/pokemonPokedex/assets/60496232/0d5055b0-0537-46c4-a707-47f19be5d62d)
+![pokeapi-js](https://github.com/user-attachments/assets/3de96a76-8ee6-4578-aa64-6d9772ff832c)
