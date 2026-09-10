@@ -1,6 +1,6 @@
-🇲🇽 Sitio web desarrollado con JavaScript, la biblioteca jQuery, CSS y Bootstrap, publicado mediante GitHub Pages y conectado a PokeAPI (pokeapi.co).
+🇲🇽 Sitio web desarrollado con JavaScript, la biblioteca jQuery, CSS y Bootstrap, publicado mediante GitHub Pages y conectado a PokeAPI.
 
-🇺🇸 Website developed with JavaScript, jQuery library, CSS and Bootstrap, published via GitHub Pages and connected to PokeAPI (pokeapi.co).
+🇺🇸 Website developed with JavaScript, using the jQuery library, CSS, and Bootstrap, deployed on GitHub Pages and connected to PokeAPI.
 
 🔗 https://mauriciobarrueta.github.io/pokemonPokedex/
 
